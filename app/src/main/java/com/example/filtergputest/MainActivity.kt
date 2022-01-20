@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     val workerHandler = Handler(Looper.getMainLooper())
 
     var testBitmap: Bitmap? = null
+    var hsv: FloatArray = FloatArray(3)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,12 +34,27 @@ class MainActivity : AppCompatActivity() {
         applyFilter = findViewById(R.id.button)
         filterImage = findViewById(R.id.imageFilterView)
 
+
+        //Color.RGBToHSV(206, 43, 55, hsv)
+
+        val hueValues = hsv[0]
+        val satValues = hsv[1]
+        val hsvValues = hsv[2]
+
+        // RGB to HSV
+        //Color.colorToHSV(currentColor, hsv)
+
         workerHandler.postDelayed({
             testBitmap = filterImage.drawToBitmap(Bitmap.Config.ARGB_8888)
 
             //HSL Adjust (hue: 0.02, saturation: -0.31, Lightness : -0.17)
             //Please see the manual for more details.
-            val ruleString = "@adjust hsl 351.0 0.0 1.5"
+            // val ruleString = "@adjust hsl 0.02 -0.31 -0.17"
+            // val ruleString = "@curve R(0, 0)(207, 240)(255, 255)"
+            //val ruleString = "@curve RGB(0, 0)(177, 166)(255, 255)R(0, 0)(52, 96)(224, 255)(255, 255)"
+           // val ruleString = "@adjust saturation 0.7 @pixblend screen 1 0.243 0.69 1 30"
+            //val ruleString = "@adjust saturation 2.0"
+            val ruleString = "@adjust hue 2.0"
 
             testBitmap = CGENativeLibrary.filterImage_MultipleEffects(testBitmap, ruleString, 1.0f)
 
@@ -48,32 +64,32 @@ class MainActivity : AppCompatActivity() {
         //Note ! This Web convert rgb values into hsv..
         // https://www.rapidtables.com/convert/color/rgb-to-hsv.html
 
-       /* Black	#000000	(0,0,0)	(0°,0%,0%)
-        White	#FFFFFF	(255,255,255)	(0°,0%,100%)
-        Red	#FF0000	(255,0,0)	(0°,100%,100%)
-        Lime	#00FF00	(0,255,0)	(120°,100%,100%)
-        Blue	#0000FF	(0,0,255)	(240°,100%,100%)
-        Yellow	#FFFF00	(255,255,0)	(60°,100%,100%)
-        Cyan	#00FFFF	(0,255,255)	(180°,100%,100%)
-        Magenta	#FF00FF	(255,0,255)	(300°,100%,100%)
-        Silver	#BFBFBF	(191,191,191)	(0°,0%,75%)
-        Gray	#808080	(128,128,128)	(0°,0%,50%)
-        Maroon	#800000	(128,0,0)	(0°,100%,50%)
-        Olive	#808000	(128,128,0)	(60°,100%,50%)
-        Green	#008000	(0,128,0)	(120°,100%,50%)
-        Purple	#800080	(128,0,128)	(300°,100%,50%)
-        Teal	#008080	(0,128,128)	(180°,100%,50%)
-        Navy	#000080	(0,0,128)	(240°,100%,50%)*/
+        /* Black	#000000	(0,0,0)	(0°,0%,0%)
+         White	#FFFFFF	(255,255,255)	(0°,0%,100%)
+         Red	#FF0000	(255,0,0)	(0°,100%,100%)
+         Lime	#00FF00	(0,255,0)	(120°,100%,100%)
+         Blue	#0000FF	(0,0,255)	(240°,100%,100%)
+         Yellow	#FFFF00	(255,255,0)	(60°,100%,100%)
+         Cyan	#00FFFF	(0,255,255)	(180°,100%,100%)
+         Magenta	#FF00FF	(255,0,255)	(300°,100%,100%)
+         Silver	#BFBFBF	(191,191,191)	(0°,0%,75%)
+         Gray	#808080	(128,128,128)	(0°,0%,50%)
+         Maroon	#800000	(128,0,0)	(0°,100%,50%)
+         Olive	#808000	(128,128,0)	(60°,100%,50%)
+         Green	#008000	(0,128,0)	(120°,100%,50%)
+         Purple	#800080	(128,0,128)	(300°,100%,50%)
+         Teal	#008080	(0,128,128)	(180°,100%,50%)
+         Navy	#000080	(0,0,128)	(240°,100%,50%)*/
 
-        val hsv = floatArrayOf(351f, 1.0f, 0.51f)
-        rgb_to_hsv(255.0,38.0,68.0)
+        val hsv = floatArrayOf(76f, 1.0f, 0.93f)
+        rgb_to_hsv(255.0, 38.0, 68.0)
 
         applyFilter.setOnClickListener {
             //applyAdjustment()
 
-           // filterImage.setColorFilter(Color.HSVToColor(hsv), PorterDuff.Mode.MULTIPLY)
+            //filterImage.setColorFilter(Color.HSVToColor(hsv), PorterDuff.Mode.MULTIPLY)
 
-             filterImage.setImageBitmap(testBitmap)
+            filterImage.setImageBitmap(testBitmap)
         }
 
     }
@@ -107,7 +123,7 @@ class MainActivity : AppCompatActivity() {
 
         // compute v
         val v = cmax * 100
-        Log.d("SHV_Values","$h $s $v")
+        Log.d("SHV_Values", "$h $s $v")
         println("($h $s $v)")
     }
 
