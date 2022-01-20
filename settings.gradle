@@ -1,0 +1,2 @@
+rootProject.name = "FilterGPUTest"
+include ':app'
