@@ -54,11 +54,12 @@ class MainActivity : AppCompatActivity() {
             //val ruleString = "@curve RGB(0, 0)(177, 166)(255, 255)R(0, 0)(52, 96)(224, 255)(255, 255)"
            // val ruleString = "@adjust saturation 0.7 @pixblend screen 1 0.243 0.69 1 30"
             //val ruleString = "@adjust saturation 2.0"
-            val ruleString = "@adjust hue 2.0"
+           // val ruleString = "@adjust hue 2.0"
+            val ruleString = MyCustomFilter.EFFECT_CONFIGS[63]
 
             testBitmap = CGENativeLibrary.filterImage_MultipleEffects(testBitmap, ruleString, 1.0f)
 
-        }, 1000)
+        }, 500)
 
 
         //Note ! This Web convert rgb values into hsv..
